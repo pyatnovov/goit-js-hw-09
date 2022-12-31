@@ -13,28 +13,34 @@ const refs = {
 const currentDate = new Date();
 let id = null;
 let dayDifferences = 0;
+let selectedDate = null;
 
 const options = {
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-  onClose(selectedDates) {
-    if (selectedDates[0] < currentDate) {
+    onClose(selectedDates) {
+        selectedDate = selectedDates[0];
+    if (selectedDate < currentDate) {
       refs.startBtn.setAttribute('disabled', 'disabled');
       return Notify.failure('Please choose a date in the future');
     } else {
-      refs.startBtn.removeAttribute('disabled');
-    }
+        refs.startBtn.removeAttribute('disabled');
+        if (selectedDate < 1000) {
+            clearInterval(id);
+            return
+        }
+        }
+        
+  },
+};
     refs.startBtn.addEventListener('click', () => {
       id = setInterval(() => {
-        dayDifferences = selectedDates[0] - new Date();
+        dayDifferences = selectedDate - new Date();
         substitution(convertMs(dayDifferences));
       }, 1000);
     });
-  },
-};
-
 const fp = flatpickr('input#datetime-picker', options);
 
 function substitution({ days, hours, minutes, seconds }) {

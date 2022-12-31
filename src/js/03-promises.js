@@ -15,6 +15,7 @@ function onFormSubmit(evt) {
   let delay = Number(refs.firstDelay.value);
   let step = Number(refs.delayStep.value);
   let amount = Number(refs.formAmount.value);
+
   for (let i = 1; i <= amount; i += 1) {
     createPromise(i, delay)
       .then(({ position, delay }) => {
@@ -25,5 +26,19 @@ function onFormSubmit(evt) {
       });
     delay += step;
   }
+}
+
+function createPromise(position, delay) {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+    const shouldResolve = Math.random() > 0.3;
+    if (shouldResolve) {
+      res({ position, delay });
+    } else {
+      rej({ position, delay });
+    }
+    },delay)
+  })
+
 }
 
