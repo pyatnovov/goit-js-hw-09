@@ -27,17 +27,17 @@ const options = {
       return Notify.failure('Please choose a date in the future');
     } else {
         refs.startBtn.removeAttribute('disabled');
-        if (selectedDate < 1000) {
-            clearInterval(id);
-            return
-        }
-        }
+    }
         
   },
 };
     refs.startBtn.addEventListener('click', () => {
       id = setInterval(() => {
         dayDifferences = selectedDate - new Date();
+          if (dayDifferences < 1000) {
+            clearInterval(id);
+            return;
+        }
         substitution(convertMs(dayDifferences));
       }, 1000);
     });
