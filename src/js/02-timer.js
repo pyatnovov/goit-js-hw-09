@@ -34,11 +34,11 @@ const options = {
     refs.startBtn.addEventListener('click', () => {
       id = setInterval(() => {
         dayDifferences = selectedDate - new Date();
+        substitution(convertMs(dayDifferences));
           if (dayDifferences < 1000) {
             clearInterval(id);
             return;
         }
-        substitution(convertMs(dayDifferences));
       }, 1000);
     });
 const fp = flatpickr('input#datetime-picker', options);
